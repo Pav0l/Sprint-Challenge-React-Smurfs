@@ -9,6 +9,7 @@ export default function App() {
   const [smurfs, setSmurfs] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [inputForm, setInputForm] = useState({name: '', age: '', height: ''});
 
   // On component MOUNT fetch smurfs from server
   useEffect(() => {
@@ -34,7 +35,19 @@ export default function App() {
     setError(null);
     setLoading(true);
 
+    console.log(smurfObj);
+
     axios.post(smurfsURL, smurfObj)
+      .then(resp => setSmurfs(resp.data))
+      .catch(err => setError(err))
+      .finally(setLoading(false));
+  }
+
+  const deleteSmurf = (id) => {
+    setError(null);
+    setLoading(true);
+
+    axios.delete(`${smurfsURL}/${id}`)
       .then(resp => setSmurfs(resp.data))
       .catch(err => setError(err))
       .finally(setLoading(false));
@@ -69,6 +82,8 @@ export default function App() {
             (<SmurfForm
               {...props}
               postSmurfs={postSmurfs}
+              inputForm={inputForm}
+              setInputForm={setInputForm}
             />)
           }
         />
@@ -80,6 +95,7 @@ export default function App() {
             (<Smurfs
               {...props}
               smurfs={smurfs}
+              deleteSmurf={deleteSmurf}
             />)
           }
         />

@@ -3,10 +3,23 @@ import React, { Component } from 'react';
 import Smurf from './Smurf';
 
 class Smurfs extends Component {
+
+  inputIdRef = React.createRef();
+
   render() {
     return (
       <div className="Smurfs">
         <h1>Smurf Village</h1>
+        <div>
+          <input
+          placeholder="smurf id to delete"
+          ref={this.inputIdRef}
+          name="delete"
+          type="text"
+        />
+          <button onClick={() => this.props.deleteSmurf(this.inputIdRef.current.value)}
+          >Delete Smurf</button>
+        </div>
         <ul>
           {this.props.smurfs.map(smurf => {
             return (
