@@ -15,13 +15,13 @@ HTTP = HyperText Transfer Protocol - it is a network protocol (rules) on how web
 
 1.  What does CRUD stand for?
 
-CRUD = Create, Read, Update, Delete
+CRUD = Create, Read, Update, Delete. These are HTTP methods to perform operations on server resources.
 
 1.  Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
 
 C = Create -> POST method
 R = Read -> GET method
-U = Update -> POP method
+U = Update -> PUT method
 D = Delete -> DELETE method
 
 1.  Mention three tools we can use to make AJAX requests
