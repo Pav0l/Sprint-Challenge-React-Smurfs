@@ -1,60 +1,54 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class SmurfForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      age: '',
-      height: ''
-    };
-  }
+export default function SmurfForm({ postSmurfs, inputForm, setInputForm }) {
 
-  addSmurf = event => {
+  const addSmurf = event => {
     event.preventDefault();
-    // add code to create the smurf using the api
-    const { name, age, height } = this.state;
-
-    this.props.postSmurfs({ name, age, height });
-
-    this.setState({
-      name: '',
-      age: '',
-      height: ''
-    });
+    postSmurfs();
   }
 
-  handleInputChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+  const handleInputChange = e => {
+    setInputForm({ ...inputForm, [e.target.name]: e.target.value });
   };
 
-  render() {
-    return (
-      <div className="SmurfForm">
-        <form onSubmit={this.addSmurf}>
-          <input
-            onChange={this.handleInputChange}
-            placeholder="name"
-            value={this.state.name}
-            name="name"
-          />
-          <input
-            onChange={this.handleInputChange}
-            placeholder="age"
-            value={this.state.age}
-            name="age"
-          />
-          <input
-            onChange={this.handleInputChange}
-            placeholder="height"
-            value={this.state.height}
-            name="height"
-          />
-          <button type="submit">Add to the village</button>
-        </form>
-      </div>
-    );
+  return (
+    <div className="SmurfForm">
+      <form onSubmit={addSmurf}>
+        <input
+          onChange={handleInputChange}
+          placeholder="name"
+          value={inputForm.name}
+          name="name"
+        />
+        <input
+          onChange={handleInputChange}
+          placeholder="age"
+          value={inputForm.age}
+          name="age"
+        />
+        <input
+          onChange={handleInputChange}
+          placeholder="height"
+          value={inputForm.height}
+          name="height"
+        />
+        <button type="submit">Add to the village</button>
+      </form>
+    </div>
+  );
+}
+
+SmurfForm.defaultProps = {
+  inputForm: {
+    name: '',
+    age: '',
+    height: '',
   }
 }
 
-export default SmurfForm;
+SmurfForm.propTypes = {
+  postSmurfs: PropTypes.func,
+  inputForm: PropTypes.object,
+  setInputForm: PropTypes.func,
+}

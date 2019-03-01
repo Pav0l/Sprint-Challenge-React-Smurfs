@@ -31,16 +31,16 @@ export default function App() {
       .finally(setLoading(false));
   }
 
-  const postSmurfs = (smurfObj) => {
+  const postSmurfs = () => {
     setError(null);
     setLoading(true);
 
-    console.log(smurfObj);
-
-    axios.post(smurfsURL, smurfObj)
+    axios.post(smurfsURL, inputForm)
       .then(resp => setSmurfs(resp.data))
       .catch(err => setError(err))
       .finally(setLoading(false));
+
+    setInputForm({ name: '', age: '', height: '' });
   }
 
   const deleteSmurf = (id) => {
@@ -58,12 +58,21 @@ export default function App() {
     return (
       <div> Just a moment, we're looking for your Smurfs!</div>
     );
-  }  
+  }
+
+  const errorScreen = () => {
+    return (
+      <div>
+        <div>Looks like Gargamel caught all our Smurfs :( {error.message} </div>
+        <NavLink to='/'><button onClick={() => setError(null)}>Go Back</button></NavLink>
+      </div>
+    );
+  }
 
   // if there are any errors, render Error screen with message
   if (error) {
     return (
-      <div>Looks like Gargamel caught all our Smurfs :( {error.message} </div>
+      <Route path="/" component={errorScreen} />
     );
   } 
 

@@ -1,45 +1,54 @@
-import React, { Component } from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import Smurf from './Smurf';
 
-class Smurfs extends Component {
+function Smurfs({ deleteSmurf, smurfs }) {
 
-  inputIdRef = React.createRef();
+  const inputIdRef = React.createRef();
 
-  render() {
-    return (
-      <div className="Smurfs">
-        <h1>Smurf Village</h1>
-        <div>
-          <input
-          placeholder="smurf id to delete"
-          ref={this.inputIdRef}
-          name="delete"
-          type="text"
+  return (
+    <div>
+      <h1>Smurf Village</h1>
+      <div>
+        <input
+        placeholder="smurf id to delete"
+        ref={inputIdRef}
+        name="delete"
+        type="text"
         />
-          <button onClick={() => this.props.deleteSmurf(this.inputIdRef.current.value)}
-          >Delete Smurf</button>
-        </div>
-        <ul>
-          {this.props.smurfs.map(smurf => {
-            return (
-              <Smurf
-                name={smurf.name}
-                id={smurf.id}
-                age={smurf.age}
-                height={smurf.height}
-                key={smurf.id}
-              />
-            );
-          })}
-        </ul>
+
+        <button
+          onClick={() => deleteSmurf(inputIdRef.current.value)}
+        >
+        Delete Smurf
+        </button>
+        
       </div>
-    );
-  }
+      <div>
+        {smurfs.map(smurf => {
+          return (
+            <Smurf
+              name={smurf.name}
+              id={smurf.id}
+              age={smurf.age}
+              height={smurf.height}
+              key={smurf.id}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+
 }
 
 Smurf.defaultProps = {
  smurfs: [],
 };
+
+Smurf.propTypes = {
+  smurfs: PropTypes.array,
+  deleteSmurf: PropTypes.func,
+}
 
 export default Smurfs;
